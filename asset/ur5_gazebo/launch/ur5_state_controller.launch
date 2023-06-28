@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+
+    <rosparam file="$(find ur5_gazebo)/controller/ur5_gazebo_state_controller.yaml" command="load"/>
+
+    <node name="controller_spawner" pkg="controller_manager" type="spawner"  respawn="false" output="screen" ns="/"
+          args="joint_state_controller
+          joint1_position_controller
+          joint2_position_controller
+          joint3_position_controller
+          joint4_position_controller
+          joint5_position_controller
+          joint6_position_controller"/>
+
+    <node name="ur_state_publisher"  pkg="robot_state_publisher"  type="robot_state_publisher" respawn="false" output="screen">
+<!--         <remap from="/joint_states" to="/ur5_arm/joint_states"/>-->
+    </node>
+</launch>

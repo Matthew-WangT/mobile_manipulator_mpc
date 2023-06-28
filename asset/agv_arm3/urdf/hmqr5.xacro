@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="hmqr5" xmlns:xacro="http://www.w3.org/1999/XSL/Transform">
+    <xacro:macro name="hmqr5_conf" params="parent_link *origin">
+        <link name="arm_base_link">
+            <inertial>
+                <origin xyz="-0.00704350108879553 -6.55374270462166E-05 0.0173904242902816" rpy="0 0 0"/>
+                <mass value="2.0"/>
+                <inertia ixx="0.000253163701750745" ixy="-1.46253717847545E-06" ixz="-1.76104844218849E-06"
+                         iyy="0.000309177571539275" iyz="3.45609861055248E-07" izz="0.000505066242399013"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://agv_arm2/meshes/arm_base_link.STL"/>
+                </geometry>
+                <material name="">
+                    <color rgba="1 1 1 1"/>
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://agv_arm2/meshes/arm_base_link.STL"/>
+                </geometry>
+            </collision>
+        </link>
+        <joint name="arm_base_joint" type="fixed">
+            <xacro:insert_block name="origin"/>
+            <parent link="${parent_link}"/>
+            <child link="arm_base_link"/>
+            <axis xyz="0 0 0"/>
+        </joint>
+    </xacro:macro>
+    <link name="link1">
+        <inertial>
+            <origin xyz="-0.0567169583181698 -0.00235564072122385 0.000138882700667187" rpy="0 0 0"/>
+            <mass value="2.0"/>
+            <inertia ixx="0.00293110308573468" ixy="-3.47507376011122E-05" ixz="3.8726154811313E-06"
+                     iyy="0.00435212480452608" iyz="-2.12678311648698E-07" izz="0.00438213463950221"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/link1.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/link1.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="joint1" type="revolute">
+        <origin xyz="0 -0.000105266487493887 0.0548561855519908" rpy="1.57079632679491 1.5707963267949 0"/>
+        <parent link="arm_base_link"/>
+        <child link="link1"/>
+        <axis xyz="-1 0 0"/>
+        <limit lower="-11" upper="11" effort="100" velocity="1"/>
+    </joint>
+    <link name="link2">
+
+        <inertial>
+            <origin xyz="-0.0584429220414362 0.187149983529193 -4.31646231805654E-10" rpy="0 0 0"/>
+            <mass value="8.0"/>
+            <inertia ixx="0.120319358955817" ixy="4.02878593271922E-07" ixz="-3.54541158052585E-11"
+                     iyy="0.00991240275678066" iyz="-2.05377531487273E-05" izz="0.12318995186214"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/link2.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/link2.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="joint2" type="revolute">
+        <origin xyz="-0.0593438144480038 -0.0773990481265728 0.000105266487493693"
+                rpy="0.000457884092179863 0 1.57079632679489"/>
+        <parent link="link1"/>
+        <child link="link2"/>
+        <axis xyz="-1 0 0"/>
+        <limit lower="-11" upper="11" effort="100" velocity="1"/>
+    </joint>
+    <link name="link3">
+
+        <inertial>
+            <origin xyz="0.00327709945364583 0.115170432740346 -0.199911913218436" rpy="0 0 0"/>
+            <mass value="4.0"/>
+            <inertia ixx="0.0317713598448578" ixy="0.000579721784174366" ixz="-0.00100672595897069"
+                     iyy="0.0250891530022326" iyz="0.0127855093188886" izz="0.010261180566717"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/link3.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/link3.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="joint3" type="revolute">
+        <origin xyz="0.0776000000000131 0.374299999999998 0" rpy="-2.61707810980682 0 -3.14159265358979"/>
+        <parent link="link2"/>
+        <child link="link3"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-11" upper="11" effort="100" velocity="1"/>
+    </joint>
+    <link name="link4">
+
+        <inertial>
+            <origin xyz="0.115612552836977 5.68599588126606E-05 -0.000182701670504132" rpy="0 0 0"/>
+            <mass value="2.0"/>
+            <inertia ixx="0.00159983275687532" ixy="-1.13064913108002E-06" ixz="3.84550144816514E-06"
+                     iyy="0.00154970394170128" iyz="0.000172861052907553" izz="0.000948735860596394"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/link4.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/link4.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="joint4" type="revolute">
+        <origin xyz="-0.00230000000000461 0.171227902195703 -0.297203643163503" rpy="-0.524056659690805 0 0"/>
+        <parent link="link3"/>
+        <child link="link4"/>
+        <axis xyz="-1 0 0"/>
+        <limit lower="-11" upper="11" effort="100" velocity="1"/>
+    </joint>
+    <link name="link5">
+
+        <inertial>
+            <origin xyz="0.1156125766376 -7.95706803857765E-06 0.00019112698992832" rpy="0 0 0"/>
+            <mass value="2.0"/>
+            <inertia ixx="0.00159984314472574" ixy="1.07453200501053E-07" ixz="-4.00464194471819E-06"
+                     iyy="0.00159587157000826" iyz="-2.276921693412E-07" izz="0.000902564205895203"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/link5.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/link5.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="joint5" type="revolute">
+        <origin xyz="0.117 -0.00059425 0.0022219" rpy="1.5708 1.3095 1.5708"/>
+        <parent link="link4"/>
+        <child link="link5"/>
+        <axis xyz="-1 0 0"/>
+        <limit lower="-11" upper="11" effort="100" velocity="1"/>
+    </joint>
+    <link name="link6">
+
+        <inertial>
+            <origin xyz="0.0015000000000005 -6.66133814775094E-16 0.0187669021540481" rpy="0 0 0"/>
+            <mass value="0.0100824945905106"/>
+            <inertia ixx="9.87586589022387E-06" ixy="3.29746387854476E-23" ixz="-2.53463527029336E-22"
+                     iyy="6.49518733073715E-06" iyz="7.41153828847492E-21" izz="3.39580230137249E-06"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/link6.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/link6.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="joint6" type="revolute">
+        <origin xyz="0.117 0 0.0682" rpy="0.683 -1.5708 0"/>
+        <parent link="link5"/>
+        <child link="link6"/>
+        <axis xyz="-1 0 0"/>
+        <limit lower="-11" upper="11" effort="100" velocity="1"/>
+    </joint>
+    <link name="d415_link"/>
+    <joint name="d415_joint" type="fixed">
+        <origin xyz="0.014 0 0.0435" rpy="-1.5708 0 -1.5708"/>
+        <parent link="link6"/>
+        <child link="d415_link"/>
+        <axis xyz="0 0 0"/>
+    </joint>
+    <link name="end_Link">
+
+        <inertial>
+            <origin xyz="-0.0758044009170491 0.00118647369121061 0.000522320190807724" rpy="0 0 0"/>
+            <mass value="0.0741731632754536"/>
+            <inertia ixx="4.4731360450387E-05" ixy="6.86799798054488E-07" ixz="1.20712885235307E-07"
+                     iyy="9.53974122835655E-05" iyz="1.90401790083396E-09" izz="0.000106472259830389"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/end_Link.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/end_Link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="end_joint" type="fixed">
+        <origin xyz="0.13561 -0.0010118 -0.00056924" rpy="0 0 0"/>
+        <parent link="link6"/>
+        <child link="end_Link"/>
+        <axis xyz="0 0 0"/>
+    </joint>
+    <link name="finger_link2">
+
+        <inertial>
+            <origin xyz="0.0187104737539547 -0.0153951860375232 -0.00037552077054534" rpy="0 0 0"/>
+            <mass value="0.00520135161584468"/>
+            <inertia ixx="1.83812760924894E-07" ixy="2.06102890915525E-08" ixz="2.81175606704593E-10"
+                     iyy="1.74961047766006E-06" iyz="7.48427007712909E-11" izz="1.69075281683774E-06"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/finger_link2.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/finger_link2.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="finger_joint2" type="prismatic">
+        <origin xyz="0 0 0" rpy="3.1416 0 3.1416"/>
+        <parent link="end_Link"/>
+        <child link="finger_link2"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="-0.1" upper="0.1" effort="1" velocity="1"/>
+    </joint>
+    <link name="finger_link1">
+
+        <inertial>
+            <origin xyz="0.018710473753955 0.0170303895104813 -0.000368846804288586" rpy="0 0 0"/>
+            <mass value="0.00520135161584464"/>
+            <inertia ixx="1.83812760924894E-07" ixy="-2.06102890915284E-08" ixz="-2.81175606763185E-10"
+                     iyy="1.74961047766005E-06" iyz="7.48427007701638E-11" izz="1.69075281683773E-06"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/finger_link1.STL"/>
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://agv_arm2/meshes/finger_link1.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="finger_joint1" type="prismatic">
+        <origin xyz="0 0 0" rpy="3.1416 0 3.1416"/>
+        <parent link="end_Link"/>
+        <child link="finger_link1"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="-0.1" upper="0.1" effort="1" velocity="1"/>
+    </joint>
+    <!-- ============================================== d435 ====================================================== -->
+    <!-- camera body, with origin at bottom screw mount -->
+    <joint name="d435_joint" type="fixed">
+        <origin rpy="0 -1.570 1.570 " xyz="0 0 0.0"/>
+        <parent link="d415_link"/>
+        <child link="d435_bottom_screw_frame"/>
+    </joint>
+    <link name="d435_bottom_screw_frame"/>
+    <joint name="d435_link_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0.0175 0.0125"/>
+        <parent link="d435_bottom_screw_frame"/>
+        <child link="d435_link"/>
+    </joint>
+    <link name="d435_link">
+        <visual>
+            <origin rpy="1.57079632679 0 1.57079632679" xyz="0.0149 -0.0175 0"/>
+            <geometry>
+                <mesh filename="package://realsense_ros_gazebo/meshes/realsense_d435.stl"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 -0.0175 0"/>
+            <geometry>
+                <box size="0.02505 0.09 0.025"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+            <mass value="0.564"/>
+            <origin rpy="0 0 0" xyz="0 -0.0175 0"/>
+            <inertia ixx="0.000410075" ixy="0" ixz="0" iyy="5.88676175e-05" iyz="0" izz="5.88676175e-05"/>
+        </inertial>
+
+    </link>
+    <!-- camera depth joints and links -->
+    <joint name="d435_depth_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="d435_link"/>
+        <child link="d435_depth_frame"/>
+    </joint>
+    <link name="d435_depth_frame"/>
+    <joint name="d435_depth_optical_joint" type="fixed">
+        <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
+        <parent link="d435_depth_frame"/>
+        <child link="d435_depth_optical_frame"/>
+    </joint>
+    <link name="d435_depth_optical_frame"/>
+    <!-- camera left IR joints and links -->
+    <joint name="d435_left_ir_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0.0 0"/>
+        <parent link="d435_depth_frame"/>
+        <child link="d435_left_ir_frame"/>
+    </joint>
+    <link name="d435_left_ir_frame"/>
+    <joint name="d435_left_ir_optical_joint" type="fixed">
+        <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
+        <parent link="d435_left_ir_frame"/>
+        <child link="d435_left_ir_optical_frame"/>
+    </joint>
+    <link name="d435_left_ir_optical_frame"/>
+    <!-- camera right IR joints and links -->
+    <joint name="d435_right_ir_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 -0.05 0"/>
+        <parent link="d435_depth_frame"/>
+        <child link="d435_right_ir_frame"/>
+    </joint>
+    <link name="d435_right_ir_frame"/>
+    <joint name="d435_right_ir_optical_joint" type="fixed">
+        <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
+        <parent link="d435_right_ir_frame"/>
+        <child link="d435_right_ir_optical_frame"/>
+    </joint>
+    <link name="d435_right_ir_optical_frame"/>
+    <!-- camera color joints and links -->
+    <joint name="d435_color_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0.015 0"/>
+        <parent link="d435_depth_frame"/>
+        <child link="d435_color_frame"/>
+    </joint>
+    <link name="d435_color_frame"/>
+    <joint name="d435_color_optical_joint" type="fixed">
+        <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
+        <parent link="d435_color_frame"/>
+        <child link="d435_color_optical_frame"/>
+    </joint>
+    <link name="d435_color_optical_frame"/>
+    <!-- gazebo plugin -->
+    <gazebo reference="d435_link">
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+        <mu2>1</mu2>
+        <fdir1>0 0 0</fdir1>
+        <kp>1e+13</kp>
+        <kd>1</kd>
+        <sensor name="d435_color" type="camera">
+            <camera name="d435">
+                <!-- horizontal_fov>1.21125850088</horizontal_fov -->
+                <horizontal_fov>0.91125850088</horizontal_fov>
+                <image>
+                    <width>640</width>
+                    <height>480</height>
+                    <format>RGB_INT8</format>
+                </image>
+                <clip>
+                    <near>0.1</near>
+                    <far>100</far>
+                </clip>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.007</stddev>
+                </noise>
+            </camera>
+            <always_on>1</always_on>
+            <update_rate>30</update_rate>
+            <visualize>1</visualize>
+        </sensor>
+        <sensor name="d435_ired1" type="camera">
+            <camera name="d435">
+                <horizontal_fov>1.4870205227</horizontal_fov>
+                <image>
+                    <width>1280</width>
+                    <height>720</height>
+                    <format>L_INT8</format>
+                </image>
+                <clip>
+                    <near>0.1</near>
+                    <far>100</far>
+                </clip>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.05</stddev>
+                </noise>
+            </camera>
+            <always_on>1</always_on>
+            <update_rate>90</update_rate>
+            <visualize>0</visualize>
+        </sensor>
+        <sensor name="d435_ired2" type="camera">
+            <camera name="d435">
+                <horizontal_fov>1.4870205227</horizontal_fov>
+                <image>
+                    <width>1280</width>
+                    <height>720</height>
+                    <format>L_INT8</format>
+                </image>
+                <clip>
+                    <near>0.1</near>
+                    <far>100</far>
+                </clip>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.05</stddev>
+                </noise>
+            </camera>
+            <always_on>1</always_on>
+            <update_rate>90</update_rate>
+            <visualize>0</visualize>
+        </sensor>
+        <sensor name="d435_depth" type="depth">
+            <camera name="d435">
+                <horizontal_fov>1.4870205227</horizontal_fov>
+                <image>
+                    <width>1280</width>
+                    <height>720</height>
+                </image>
+                <clip>
+                    <near>0.1</near>
+                    <far>100</far>
+                </clip>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.100</stddev>
+                </noise>
+            </camera>
+            <always_on>1</always_on>
+            <update_rate>90</update_rate>
+            <visualize>0</visualize>
+        </sensor>
+    </gazebo>
+    <gazebo>
+        <plugin filename="librealsense_gazebo_plugin.so" name="d435">
+            <prefix>d435_</prefix>
+            <depthUpdateRate>1</depthUpdateRate>
+            <colorUpdateRate>1</colorUpdateRate>
+            <infraredUpdateRate>1</infraredUpdateRate>
+            <depthTopicName>depth/image_raw</depthTopicName>
+            <depthCameraInfoTopicName>depth/camera_info</depthCameraInfoTopicName>
+            <colorTopicName>color/image_raw</colorTopicName>
+            <colorCameraInfoTopicName>color/camera_info</colorCameraInfoTopicName>
+            <infrared1TopicName>infra1/image_raw</infrared1TopicName>
+            <infrared1CameraInfoTopicName>infra1/camera_info</infrared1CameraInfoTopicName>
+            <infrared2TopicName>infra2/image_raw</infrared2TopicName>
+            <infrared2CameraInfoTopicName>infra2/camera_info</infrared2CameraInfoTopicName>
+            <colorOpticalframeName>d435_color_optical_frame</colorOpticalframeName>
+            <depthOpticalframeName>d435_depth_optical_frame</depthOpticalframeName>
+            <infrared1OpticalframeName>d435_infrared1_optical_frame</infrared1OpticalframeName>
+            <infrared2OpticalframeName>d435_infrared2_optical_frame</infrared2OpticalframeName>
+            <rangeMinDepth>0.3</rangeMinDepth>
+            <rangeMaxDepth>3.0</rangeMaxDepth>
+            <pointCloud>true</pointCloud>
+            <pointCloudTopicName>depth/color/points</pointCloudTopicName>
+            <pointCloudCutoff>0.25</pointCloudCutoff>
+            <pointCloudCutoffMax>9.0</pointCloudCutoffMax>
+        </plugin>
+    </gazebo>
+
+    <transmission name="trans_left_joint">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="left_joint">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="left_joint_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_right_joint">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="right_joint">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="right_joint_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_joint1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint1">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="joint1_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_joint2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint2">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="joint2_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_joint3">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint3">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="joint3_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_joint4">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint4">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="joint4_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_joint5">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint5">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="joint5_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_joint6">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="joint6">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="joint6_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_finger_joint2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="finger_joint2">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="finger_joint2_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_finger_joint1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="finger_joint1">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="finger_joint1_motor">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+</robot>

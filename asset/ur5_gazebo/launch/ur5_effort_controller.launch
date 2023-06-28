@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+
+    <rosparam file="$(find ur5_gazebo)/controller/ur5_gazebo_effort_controller.yaml" command="load"/>
+
+    <node name="controller_spawner" pkg="controller_manager" type="spawner"  respawn="false" output="screen" ns="/"
+          args="joint_state_controller
+          joint1_effort_controller
+          joint2_effort_controller
+          joint3_effort_controller
+          joint4_effort_controller
+          joint5_effort_controller
+          joint6_effort_controller"/>
+
+    <node name="ur_state_publisher"  pkg="robot_state_publisher"  type="robot_state_publisher" respawn="false" output="screen">
+<!--         <remap from="/joint_states" to="/ur5_arm/joint_states"/>-->
+    </node>
+</launch>

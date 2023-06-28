@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+    <rosparam file="$(find ur5_gazebo)/controller/gripper_controller.yaml" command="load"/>
+<!--    <rosparam file="$(find ur5_gazebo)/controller/gripper_pos_controller.yaml" command="load"/>-->
+
+    <node name="gripper_controller_spawner" pkg="controller_manager" type="spawner"  respawn="false" output="screen" ns="/"
+          args="right_finger_controller
+          left_finger_controller"/>
+
+<!--    <node name="gripper_state_publisher"  pkg="robot_state_publisher"  type="robot_state_publisher" respawn="false" output="screen"/>-->
+</launch>

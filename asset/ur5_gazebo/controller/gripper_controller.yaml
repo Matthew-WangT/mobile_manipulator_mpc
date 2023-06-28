@@ -1,0 +1,32 @@
+# Publish all joint states -----------------------------------
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+# Position Controllers ---------------------------------------
+#right_finger_controller:
+#  type: effort_controllers/GripperActionController
+#  joint: l_gripper_r_finger_joint
+#  pid: {p: 100.0, i: 0.01, d: 10.0}
+#left_finger_controller:
+#  type: effort_controllers/GripperActionController
+#  joint: l_gripper_l_finger_joint
+#  pid: {p: 100.0, i: 0.01, d: 10.0}
+
+#right_finger_controller:
+#  type: effort_controllers/JointPositionController
+#  joint: l_gripper_r_finger_joint
+#  pid: {p: 100.0, i: 0.01, d: 10.0}
+#left_finger_controller:
+#  type: effort_controllers/JointPositionController
+#  joint: l_gripper_l_finger_joint
+#  pid: {p: 100.0, i: 0.01, d: 10.0}
+
+right_finger_controller:
+  type: effort_controllers/JointEffortController
+  joint: l_gripper_r_finger_joint
+  pid: {p: 100.0, i: 0.01, d: 10.0}
+left_finger_controller:
+  type: effort_controllers/JointEffortController
+  joint: l_gripper_l_finger_joint
+  pid: {p: 100.0, i: 0.01, d: 10.0}

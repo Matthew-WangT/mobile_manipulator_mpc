@@ -1,0 +1,32 @@
+digraph G {
+node [shape=box];
+"base_link" [label="base_link"];
+"back_link1" [label="back_link1"];
+"back_link2" [label="back_link2"];
+"front_link1" [label="front_link1"];
+"front_link2" [label="front_link2"];
+"left_link" [label="left_link"];
+"lidar_link" [label="lidar_link"];
+"pc_link" [label="pc_link"];
+"pwr_link" [label="pwr_link"];
+"right_link" [label="right_link"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"base_link" -> "back_joint1" [label="xyz: -0.20285 -0.0175 0.025 \nrpy: 0 -0 0"]
+"back_joint1" -> "back_link1"
+"back_link1" -> "back_joint2" [label="xyz: -0.012154 0.020925 -0.06 \nrpy: 1.5708 -0 -1.5708"]
+"back_joint2" -> "back_link2"
+"base_link" -> "front_joint1" [label="xyz: 0.202708 0.0175 0.025 \nrpy: 1.5708 -0 1.57904"]
+"front_joint1" -> "front_link1"
+"front_link1" -> "front_joint2" [label="xyz: 0.0210289 -0.06 -0.0125352 \nrpy: 0 1.56255 0"]
+"front_joint2" -> "front_link2"
+"base_link" -> "left_joint" [label="xyz: 0 0.1645 0.0325 \nrpy: 1.5708 -0.0872665 -3.14159"]
+"left_joint" -> "left_link"
+"base_link" -> "lidar_joint" [label="xyz: 0.250827 0 0.225842 \nrpy: 0 -0 0"]
+"lidar_joint" -> "lidar_link"
+"base_link" -> "pc_joint" [label="xyz: 0.0894404 0.09 0.170842 \nrpy: 3.14159 -0 3.14159"]
+"pc_joint" -> "pc_link"
+"base_link" -> "pwr_joint" [label="xyz: -0.101417 0.14846 0.170842 \nrpy: 3.14159 -0 3.14159"]
+"pwr_joint" -> "pwr_link"
+"base_link" -> "right_joint" [label="xyz: 0 -0.1645 0.0325 \nrpy: 1.5708 -0.0872665 0"]
+"right_joint" -> "right_link"
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<robot name="agv_arm3" xmlns:xacro="http://www.w3.org/1999/XSL/Transform">
+    <xacro:include filename="$(find agv_arm3)/urdf/agv_base.xacro" />
+    <xacro:include filename="$(find agv_arm3)/urdf/hmqr5.xacro" />
+    <xacro:hmqr5_conf  parent_link="pc_link">
+        <origin xyz="0.12 -0.0899999999999999 -0.11"
+                rpy="3.14159265358979 0 3.14159265358979" />
+    </xacro:hmqr5_conf>
+</robot>

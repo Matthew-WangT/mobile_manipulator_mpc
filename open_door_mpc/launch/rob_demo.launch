@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    <!--  gazebo  -->
+    <arg name="gui" default="false" doc="Starts gazebo gui" />
+    <include file="$(find omni_rob)/launch/omni_ur5_gazebo.launch">
+        <arg name="gui" value="$(arg gui)"/>
+    </include>
+    <!--  rviz  -->
+    <node name="rviz_visualisation" pkg="rviz" type="rviz" output="log" args="-d $(find open_door_mpc)/launch/rob_demo.rviz" />
+    <!-- link world to odom -->
+    <node pkg="tf" type="static_transform_publisher" name="world_to_odom" args="0 0 0 0 0 0 world odom 100"/>
+    <!-- pub target -->
+    <node pkg="interactive_marker" type="interactive_marker_node" name="interactive_marker_node"/>
+    <!-- MPC node -->
+    <!-- <node name="mpc_demo" pkg="open_door_mpc" type="diff_rob_mpc_ur5_demo.py" output="screen"  /> -->
+    <node name="mpc_demo" pkg="open_door_mpc" type="mobile_manipulator_mpc_demo.py" output="screen"  />
+</launch>

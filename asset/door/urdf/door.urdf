@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="door">
+<!--  <link name="door_plane">-->
+<!--    <visual>-->
+<!--      <origin-->
+<!--              xyz="0.5 0 0"-->
+<!--              rpy="0 0 0" />-->
+<!--      <geometry>-->
+<!--        <box size="1 4 0.005"/>-->
+<!--      </geometry>-->
+<!--    </visual>-->
+<!--    <collision>-->
+<!--      <origin-->
+<!--              xyz="0.5 0 0"-->
+<!--              rpy="0 0 0" />-->
+<!--      <geometry>-->
+<!--        <box size="1 4 0.005"/>-->
+<!--      </geometry>-->
+<!--    </collision>-->
+<!--  </link>-->
+<!--  <joint name="door_plane_to_cover" type="fixed">-->
+<!--    <origin xyz="0 0 0.005" rpy="0 0 0" />-->
+<!--    <parent link="door_plane" />-->
+<!--    <child link="door_cover_link" />-->
+<!--  </joint>-->
+  <link
+    name="door_cover_link">
+    <inertial>
+      <origin
+        xyz="0.469 -0.020062 1.2583"
+        rpy="0 0 0" />
+      <mass
+        value="16.213" />
+      <inertia
+        ixx="7.6894"
+        ixy="-0.00048417"
+        ixz="-0.022714"
+        iyy="11.42"
+        iyz="-0.00023584"
+        izz="3.7353" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://door/meshes/door_cover_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.2 0.2 0.2 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://door/meshes/door_cover_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="door_link">
+    <inertial>
+      <origin
+        xyz="0.48213 -0.029974 -0.775"
+        rpy="0 0 0" />
+      <mass
+        value="77.583" />
+      <inertia
+        ixx="27.328"
+        ixy="0.00096194"
+        ixz="4.1984E-16"
+        iyy="33.123"
+        iyz="-5.5362E-17"
+        izz="5.8156" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://door/meshes/door_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.8 0.8 0.6 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://door/meshes/door_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="door_shaft_joint"
+    type="revolute">
+    <origin
+      xyz="-0.01 0.01 1.8"
+      rpy="0 0 0" />
+    <parent
+      link="door_cover_link" />
+    <child
+      link="door_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="1"
+      friction="1" />
+  </joint>
+  <link
+    name="door_hinge_link">
+    <inertial>
+      <origin
+        xyz="-0.068706 0.07843 -2.7756E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.23055" />
+      <inertia
+        ixx="0.0001603"
+        ixy="0.00018327"
+        ixz="-2.2485E-20"
+        iyy="0.001077"
+        iyz="6.6033E-21"
+        izz="0.001184" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://door/meshes/door_hinge_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.8 0.6 0.6 1" />
+      </material>
+    </visual>
+<!--    <collision>-->
+<!--      <origin-->
+<!--        xyz="0 0 0"-->
+<!--        rpy="0 0 0" />-->
+<!--      <geometry>-->
+<!--        <mesh-->
+<!--          filename="package://door/meshes/door_hinge_link.STL" />-->
+<!--      </geometry>-->
+<!--    </collision>-->
+  </link>
+  <joint
+    name="door_hinge_joint"
+    type="revolute">
+    <origin
+      xyz="0.92 -0.01 -0.775"
+      rpy="0 0 0" />
+    <parent
+      link="door_link" />
+    <child
+      link="door_hinge_link" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="0"
+      upper="1.5708"
+      effort="0"
+      velocity="0" />
+    <dynamics
+      damping="1"
+      friction="1" />
+  </joint>
+
+  <!-- by matthew 2022/4/3 -->
+  <link name="hinge_lock">
+    <visual>
+      <origin
+              xyz="0.05 -0.06 0"
+              rpy="0 1.5708 0" />
+      <geometry>
+        <box size="0.05 0.01 0.1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin
+              xyz="0.05 -0.06 0"
+              rpy="0 1.5708 0" />
+      <geometry>
+        <box size="0.05 0.01 0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="hinge_to_lock" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="door_hinge_link" />
+    <child link="hinge_lock" />
+  </joint>
+  <link name="hinge_lock_front">
+    <visual>
+      <origin
+              xyz="0.05 0.02 0"
+              rpy="0 1.5708 0" />
+      <geometry>
+        <box size="0.05 0.01 0.1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin
+              xyz="0.05 0.02 0"
+              rpy="0 1.5708 0" />
+      <geometry>
+        <box size="0.05 0.01 0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="hinge_to_lock_front" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="door_hinge_link" />
+    <child link="hinge_lock_front" />
+  </joint>
+  <link name="hinge_handle_box">
+    <visual>
+      <origin
+              xyz="-0.09 0.09 0"
+              rpy="0 1.5708 0" />
+      <geometry>
+        <!--  2cm x 3cm x 20cm      -->
+        <box size="0.03 0.02 0.2"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin
+              xyz="-0.09 0.09 0"
+              rpy="0 1.5708 0" />
+      <geometry>
+        <!--  2cm x 3cm x 20cm      -->
+        <box size="0.03 0.02 0.2"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="hinge_to_handle" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="door_hinge_link" />
+    <child link="hinge_handle_box" />
+  </joint>
+</robot>

@@ -1,0 +1,516 @@
+<sdf version='1.7'>
+  <world name='my_world'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='door'>
+      <link name='door_plane'>
+        <inertial>
+          <pose>0.469 -0.020062 1.2633 0 -0 0</pose>
+          <mass>16.213</mass>
+          <inertia>
+            <ixx>7.6894</ixx>
+            <ixy>-0.00048417</ixy>
+            <ixz>-0.022714</ixz>
+            <iyy>11.42</iyy>
+            <iyz>-0.00023584</iyz>
+            <izz>3.7353</izz>
+          </inertia>
+        </inertial>
+        <collision name='door_plane_collision'>
+          <pose>0.5 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1 4 0.005</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='door_plane_fixed_joint_lump__door_cover_link_collision_1'>
+          <pose>0 0 0.005 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/matthew/open_door_ws/src/simulation/door/meshes/door_cover_link.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='door_plane_visual'>
+          <pose>0.5 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1 4 0.005</size>
+            </box>
+          </geometry>
+        </visual>
+        <visual name='door_plane_fixed_joint_lump__door_cover_link_visual_1'>
+          <pose>0 0 0.005 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/matthew/open_door_ws/src/simulation/door/meshes/door_cover_link.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='door_shaft_joint' type='revolute'>
+        <pose relative_to='door_plane'>-0.01 0.01 1.805 0 -0 0</pose>
+        <parent>door_plane</parent>
+        <child>door_link</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>1.5708</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <damping>1</damping>
+            <friction>1</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='door_link'>
+        <pose relative_to='door_shaft_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0.48213 -0.029974 -0.775 0 -0 0</pose>
+          <mass>77.583</mass>
+          <inertia>
+            <ixx>27.328</ixx>
+            <ixy>0.00096194</ixy>
+            <ixz>4.1984e-16</ixz>
+            <iyy>33.123</iyy>
+            <iyz>-5.5362e-17</iyz>
+            <izz>5.8156</izz>
+          </inertia>
+        </inertial>
+        <collision name='door_link_collision'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/matthew/open_door_ws/src/simulation/door/meshes/door_link.STL</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='door_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/matthew/open_door_ws/src/simulation/door/meshes/door_link.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='door_hinge_joint' type='revolute'>
+        <pose relative_to='door_link'>0.92 -0.01 -0.775 0 -0 0</pose>
+        <parent>door_link</parent>
+        <child>door_hinge_link</child>
+        <axis>
+          <xyz>0 -1 0</xyz>
+          <limit>
+            <lower>0</lower>
+            <upper>1.5708</upper>
+            <effort>0</effort>
+            <velocity>0</velocity>
+          </limit>
+          <dynamics>
+            <damping>1</damping>
+            <friction>1</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='door_hinge_link'>
+        <pose relative_to='door_hinge_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>-0.068706 0.07843 -0 0 -0 0</pose>
+          <mass>0.23055</mass>
+          <inertia>
+            <ixx>0.0001603</ixx>
+            <ixy>0.00018327</ixy>
+            <ixz>-2.2485e-20</ixz>
+            <iyy>0.001077</iyy>
+            <iyz>6.6033e-21</iyz>
+            <izz>0.001184</izz>
+          </inertia>
+        </inertial>
+        <collision name='door_hinge_link_fixed_joint_lump__hinge_handle_box_collision'>
+          <pose>-0.09 0.09 0 3.14159 1.57079 3.14159</pose>
+          <geometry>
+            <box>
+              <size>0.03 0.02 0.2</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='door_hinge_link_fixed_joint_lump__hinge_lock_collision_1'>
+          <pose>0.05 -0.06 0 3.14159 1.57079 3.14159</pose>
+          <geometry>
+            <box>
+              <size>0.05 0.01 0.1</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='door_hinge_link_fixed_joint_lump__hinge_lock_front_collision_2'>
+          <pose>0.05 0.02 0 3.14159 1.57079 3.14159</pose>
+          <geometry>
+            <box>
+              <size>0.05 0.01 0.1</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='door_hinge_link_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/matthew/open_door_ws/src/simulation/door/meshes/door_hinge_link.STL</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='door_hinge_link_fixed_joint_lump__hinge_handle_box_visual_1'>
+          <pose>-0.09 0.09 0 3.14159 1.57079 3.14159</pose>
+          <geometry>
+            <box>
+              <size>0.03 0.02 0.2</size>
+            </box>
+          </geometry>
+        </visual>
+        <visual name='door_hinge_link_fixed_joint_lump__hinge_lock_visual_2'>
+          <pose>0.05 -0.06 0 3.14159 1.57079 3.14159</pose>
+          <geometry>
+            <box>
+              <size>0.05 0.01 0.1</size>
+            </box>
+          </geometry>
+        </visual>
+        <visual name='door_hinge_link_fixed_joint_lump__hinge_lock_front_visual_3'>
+          <pose>0.05 0.02 0 3.14159 1.57079 3.14159</pose>
+          <geometry>
+            <box>
+              <size>0.05 0.01 0.1</size>
+            </box>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+
+      <link name='apriltag_0::link'>
+        <pose frame=''>0.6 0.1 10. 0 0 0</pose>
+        <inertial>
+          <mass>1e-05</mass>
+          <inertia>
+            <ixx>0.00058</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00058</iyy>
+            <iyz>0</iyz>
+            <izz>0.00019</izz>
+          </inertia>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.06 0.06 0.001</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.06 0.06 0.001</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://apriltag_0/materials/scripts</uri>
+              <uri>model://apriltag_0/materials/textures</uri>
+              <name>Apriltag_0/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='apriltag_0' type='fixed'>
+        <child>apriltag_0::link</child>
+        <parent>door_plane</parent>
+      </joint>
+
+      <pose>0 0 0 0 -0 0</pose>
+    </model>
+    <model name="apriltag_0">
+      <link name="link">
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <mass>0.00001</mass>
+          <inertia>
+            <ixx>0.00058</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00058</iyy>
+            <iyz>0</iyz>
+            <izz>0.00019</izz>
+          </inertia>
+        </inertial>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>.06 .06 .001</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.06 .06 .001</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://apriltag_0/materials/scripts</uri>
+              <uri>model://apriltag_0/materials/textures</uri>
+              <name>Apriltag_0/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <state world_name='my_world'>
+      <sim_time>0 0</sim_time>
+      <real_time>0 0</real_time>
+      <wall_time>1649057928 175930210</wall_time>
+      <iterations>0</iterations>
+      <model name='door'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='door_hinge_link'>
+          <pose>0.91 0 1.03 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='door_link'>
+          <pose>-0.01 0.01 1.805 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+        <link name='door_plane'>
+          <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>5 -5 2 0 0.275643 2.35619</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>
