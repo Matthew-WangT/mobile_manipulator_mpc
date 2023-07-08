@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro"
+	   name="omni_z1" >
+	<!-- z1 -->
+	<xacro:include filename="$(find z1_description)/xacro/robot.xacro" />
+
+<!--  2  -->
+	<xacro:include filename="$(find omni_rob)/urdf/agv_base.xacro" />
+	<joint name="omni_base_to_z1_base" type="fixed">
+		<parent link="dummy" />
+		<child link = "arm_base_link" />
+		<origin xyz="0.0 0.0 0.5" rpy="0.0 0.0 0.0" />
+	</joint>
+
+<!--	<xacro:include filename="$(find realsense_ros_gazebo)/xacro/tracker.xacro"/>-->
+<!--	<xacro:include filename="$(find realsense_ros_gazebo)/xacro/depthcam.xacro"/>-->
+<!--	<xacro:realsense_d435 sensor_name="d435" parent_link="ee_link" rate="2">-->
+<!--		<origin rpy="0 0 0 " xyz="0 0 0.05"/>-->
+<!--	</xacro:realsense_d435>-->
+
+</robot>

@@ -1,0 +1,269 @@
+<?xml version="1.0"?>
+
+<robot name="omni_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!--  see Modern Robotics	-->
+	<xacro:property name="omni_l" value="0.25" />
+	<xacro:property name="omni_w" value="0.2" />
+	<xacro:property name="chassis_h" value="0.4" />
+
+	<xacro:property name="length_wheel" value="0.05" />
+	<xacro:property name="radius_wheel" value="0.06" />
+	<xacro:property name="camera_link" value="0.05" /> 
+        <xacro:property name="PI" value="3.1415926"/>
+	<xacro:macro name="default_inertial" params="mass">
+               <inertial>
+                       <mass value="${mass}" />
+                       <inertia ixx="0.01" ixy="0.0" 
+                                ixz="0.0"
+                                iyy="0.01" iyz="0.0"
+                                izz="0.01" />
+               </inertial>
+	</xacro:macro>
+    <link name="dummy">
+    </link>
+	<link name="base_footprint">
+   		<visual>
+			<geometry>
+      				<box size="0.001 0.001 0.001"/>
+     			</geometry>
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+   		</visual>
+		<xacro:default_inertial mass="0.0001"/>
+ 	</link>
+   <joint name="dummy_joint" type="fixed">
+     <parent link="dummy"/>
+     <child link="base_footprint"/>
+   </joint>
+<!--  	<xacro:include filename="$(find nav_sim)/urdf/robot.gazebo" />  -->    
+ 
+	<gazebo reference="base_footprint">
+		<material>Gazebo/Green</material>
+		<turnGravityOff>false</turnGravityOff>
+	</gazebo>
+
+	<joint name="base_footprint_joint" type="fixed">
+		<origin xyz="0 0 0" />
+		<parent link="base_footprint" />
+		<child link="omni_base_link" />
+	</joint>
+
+
+	<link name="omni_base_link">
+   		<visual>
+			<geometry>
+      				<box size="${2*(omni_w-length_wheel)} ${2*omni_l} ${chassis_h}"/>
+     			</geometry>
+			<origin rpy="0 0 ${PI/2}" xyz="0 0 ${chassis_h/2.0}"/>
+			<material name="white">　　　
+				<color rgba="1 1 1 1"/>
+			</material>
+   		</visual>
+<!--		<collision>-->
+<!--			<geometry>-->
+<!--       				<box size="${2*(omni_w-length_wheel)} ${2*omni_l} ${chassis_h}"/>-->
+<!--			</geometry>-->
+<!--		</collision>-->
+		<xacro:default_inertial mass="20"/>
+ 	</link>
+
+ 	<link name="wheel_1">
+   		<visual>
+     			<geometry>
+       				<cylinder length="${length_wheel}" radius="${radius_wheel}"/>
+     			</geometry>
+			<!-- <origin rpy="0 1.5 0" xyz="0.1 0.1 0"/> -->
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+   			<material name="black">
+				<color rgba="0 0 0 1"/>
+			</material>
+		</visual>
+<!--		<collision>-->
+<!--			<geometry>-->
+<!--       				<cylinder length="${length_wheel}" radius="${radius_wheel}"/>-->
+<!--			</geometry>-->
+<!--		</collision>-->
+		  <mu1>0.5</mu1>
+		    <mu2>0.5</mu2>
+		    <!-- <mu1>0.5</mu1>
+		    <mu2>0.5</mu2> -->
+		<xacro:default_inertial mass="0.5"/>  
+ 	</link>
+
+  	<link name="wheel_2">
+   		<visual>
+     			<geometry>
+       				<cylinder length="${length_wheel}" radius="${radius_wheel}"/>
+     			</geometry>
+			<!-- <origin rpy="0 1.5 0" xyz="-0.1 0.1 0"/> -->
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+   			<material name="black"/>
+   		</visual>
+<!--		<collision>-->
+<!--			<geometry>-->
+<!--       				<cylinder length="${length_wheel}" radius="${radius_wheel}"/>-->
+<!--			</geometry>-->
+<!--		</collision>-->
+		   <mu1>0.5</mu1>
+		    <mu2>0.5</mu2>
+		    <!-- <mu1>0.5</mu1>
+		    <mu2>0.5</mu2> -->
+		<xacro:default_inertial mass="0.5"/>  
+
+ 	</link>
+    
+ 	<link name="wheel_3">
+   		<visual>
+     			<geometry>
+       				<cylinder length="${length_wheel}" radius="${radius_wheel}"/>
+     			</geometry>
+			<!-- <origin rpy="0 1.5 0" xyz="0.1 -0.1 0"/> -->
+
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+   			<material name="black"/>
+   		</visual>
+<!--		<collision>-->
+<!--			<geometry>-->
+<!--       				<cylinder length="${length_wheel}" radius="${radius_wheel}"/>-->
+<!--			</geometry>-->
+<!--		</collision>-->
+		 <mu1>0.5</mu1>
+		    <mu2>0.5</mu2>
+		    <!-- <mu1>0.5</mu1>
+		    <mu2>0.5</mu2> -->
+		<xacro:default_inertial mass="0.5"/>    
+ 	</link>
+
+ 	<link name="wheel_4">
+   		<visual>
+     			<geometry>
+       				<cylinder length="${length_wheel}" radius="${radius_wheel}"/>
+     			</geometry>
+		<!--	<origin rpy="0 1.5 0" xyz="-0.1 -0.1 0"/> -->
+			<origin rpy="0 0 0" xyz="0 0 0" />
+   			<material name="black"/>
+   		</visual>
+<!--		<collision>-->
+<!--			<geometry>-->
+<!--       				<cylinder length="${length_wheel}" radius="${radius_wheel}"/>-->
+<!--			</geometry>-->
+<!--		</collision>-->
+		   <mu1>0.5</mu1>
+		    <mu2>0.5</mu2>
+		    <!-- <mu1>0.5</mu1>
+		    <mu2>0.5</mu2> -->
+		<xacro:default_inertial mass="0.5"/>    
+
+ 	</link>
+
+
+
+ <joint name="base_to_wheel1" type="continuous">
+   <parent link="omni_base_link"/>
+   <child link="wheel_1"/>
+   <origin rpy="${-PI/2} 0 0" xyz="${omni_l} ${omni_w} 0"/>
+   <axis xyz="0 0 1" />
+ </joint>
+
+ <joint name="base_to_wheel2" type="continuous">
+   <axis xyz="0 0 1" />
+   <anchor xyz="0 0 0" />
+   <limit effort="100" velocity="100" />
+   <parent link="omni_base_link"/>
+   <child link="wheel_2"/>
+   <origin rpy="${-PI/2} 0 0" xyz="-${omni_l} ${omni_w} 0"/>
+</joint>
+
+ <joint name="base_to_wheel3" type="continuous">
+   <parent link="omni_base_link"/>
+   <axis xyz="0 0 1" />
+   <child link="wheel_3"/>
+   <origin rpy="${-PI/2} 0 0" xyz="${omni_l} -${omni_w} 0"/>
+ </joint>
+
+ <joint name="base_to_wheel4" type="continuous">
+   <parent link="omni_base_link"/>
+   <axis xyz="0 0 1" />
+   <child link="wheel_4"/>
+   <origin rpy="${-PI/2} 0 0" xyz="-${omni_l} -${omni_w} 0"/>
+ </joint>
+
+<!-- gazebo插件设置相关 -->
+
+   <gazebo reference="omni_base_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+ <gazebo reference="wheel_1">
+        <material>Gazebo/Red</material>
+ </gazebo>
+
+ <gazebo reference="wheel_2">
+        <material>Gazebo/Black</material>
+ </gazebo>
+
+ <gazebo reference="wheel_3">
+        <material>Gazebo/Red</material>
+ </gazebo>
+
+ <gazebo reference="wheel_4">
+        <material>Gazebo/Black</material>
+ </gazebo>
+
+
+  <!-- ros_control plugin -->
+<!--<gazebo>-->
+<!--    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">-->
+<!--      <robotNamespace>/robot</robotNamespace>-->
+<!--       <legacyModeNS> true </legacyModeNS>-->
+<!--    </plugin>-->
+<!--  </gazebo>-->
+
+  <!-- Drive controller -->
+<!--<gazebo>-->
+<!--  <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">-->
+<!--    <alwaysOn>true</alwaysOn>-->
+<!--    <updateRate>100.0</updateRate>-->
+<!--    <robotNamespace>/</robotNamespace>-->
+<!--    <leftFrontJoint>base_to_wheel1</leftFrontJoint>-->
+<!--    <rightFrontJoint>base_to_wheel3</rightFrontJoint>-->
+<!--    <leftRearJoint>base_to_wheel2</leftRearJoint>-->
+<!--    <rightRearJoint>base_to_wheel4</rightRearJoint>-->
+<!--    <wheelSeparation>0.26</wheelSeparation>-->
+<!--    <wheelDiameter>0.12</wheelDiameter>-->
+<!--    <torque>2</torque>-->
+<!--    <commandTopic>cmd_vel</commandTopic>-->
+<!--    <odometryTopic>odom</odometryTopic>-->
+<!--    <odometryFrame>odom</odometryFrame>-->
+<!--    <robotBaseFrame>dummy</robotBaseFrame>-->
+<!--    <broadcastTF>1</broadcastTF>-->
+<!--  </plugin>-->
+<!--</gazebo>-->
+
+<!--<gazebo>-->
+<!--  <plugin name="mecanum_controller" filename="libgazebo_ros_planar_move.so">-->
+<!--    <alwaysOn>true</alwaysOn>-->
+<!--    <updateRate>100.0</updateRate>-->
+<!--    <robotNamespace>/</robotNamespace>-->
+<!--    <leftFrontJoint>base_to_wheel1</leftFrontJoint>-->
+<!--    <rightFrontJoint>base_to_wheel3</rightFrontJoint>-->
+<!--    <leftRearJoint>base_to_wheel2</leftRearJoint>-->
+<!--    <rightRearJoint>base_to_wheel4</rightRearJoint>-->
+<!--    <wheelSeparation>${2*omni_w}</wheelSeparation>-->
+<!--    <wheelDiameter>${2*radius_wheel}</wheelDiameter>-->
+<!--    <torque>2</torque>-->
+<!--    <commandTopic>cmd_vel</commandTopic>-->
+<!--    <odometryTopic>odom</odometryTopic>-->
+<!--    <odometryFrame>odom</odometryFrame>-->
+<!--    <robotBaseFrame>dummy</robotBaseFrame>-->
+<!--    <broadcastTF>1</broadcastTF>-->
+<!--  </plugin>-->
+<!--</gazebo>-->
+
+<!-- gazebo插件设置相关结束 -->
+
+<gazebo reference="dummy">
+	<kinematic>1</kinematic>
+</gazebo>
+
+</robot>

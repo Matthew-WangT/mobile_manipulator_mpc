@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find omni_rob)/launch/omni_ur5_gazebo.launch"/>
+    <node name="rviz_visualisation" pkg="rviz" type="rviz" output="log" args="-d $(find omni_rob)/rviz/ft_sensor.rviz" />
+</launch>

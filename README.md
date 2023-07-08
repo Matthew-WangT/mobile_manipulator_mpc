@@ -3,6 +3,7 @@
 
 # 安装
 ## 1. 使用Docker进行部署（推荐）
+自行安装docker。随后在任意路径下执行以下命令。
 ```bash
 git clone https://github.com/Matthew-WangT/mobile_manipulator_mpc.git
 cd mobile_manipulator_mpc
@@ -22,7 +23,7 @@ catkin build -j
 ## 2. 自行编译
 可参考Dockerfile的内容自行编译。
 
-# Demo
+# Demos
 ## Demo1-移动机械臂末端执行器移动至目标点
 ```bash
 source ~/catkin_ws/devel/setup.bash
@@ -33,3 +34,13 @@ roslaunch open_door_mpc rob_demo.launch
 
 # Others
 时间有限，或许存在部分冗余代码并未及时删去，请见谅。
+
+# Refers
+[1] Osman M , Mehrez M W , Yang S ,et al.End-Effector Stabilization of a 10-DOF Mobile Manipulator using Nonlinear Model Predictive Control[J].IFAC-PapersOnLine, 2020, 53(2):9772-9777.DOI:10.1016/j.ifacol.2020.12.2658.
+
+[2] J. Pankert and M. Hutter, "Perceptive Model Predictive Control for Continuous Mobile Manipulation," in IEEE Robotics and Automation Letters, vol. 5, no. 4, pp. 6177-6184, Oct. 2020, doi: 10.1109/LRA.2020.3010721.
+
+[3] OCS2的RVIZ可视化工具（interactive_marker）
+
+[4] [
+Mohamed W. Mehrez的casadi视频教程](https://www.youtube.com/watch?v=RrnkPrcpyEA&t=7s)

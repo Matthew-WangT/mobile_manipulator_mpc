@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+<!--  <arg name="limited" default="false"  doc="If true, limits joint range [-PI, PI] on all joints." />-->
+  <arg name="paused" default="false" doc="Starts gazebo in paused mode" />
+  <arg name="gui" default="true" doc="Starts gazebo gui" />
+
+  <!-- startup simulated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+   <!-- <arg name="world_name" default="worlds/empty.world"/> -->
+    <!-- <arg name="world_name" value="$(find open_door_mr)/worlds/door_scene.world"/> -->
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+
+  <!-- send robot urdf to param server -->
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <arg name="model" default="$(find omni_rob)/urdf/omni_ur5.xacro" />
+
+  <!-- <param name="robot_description" command="$(find xacro)/xacro  inorder $(arg model)" /> -->
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -z 0.06" respawn="false" output="screen" />
+
+
+<!--  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />-->
+  <!--  state controller  -->
+  <include file="$(find ur5_gazebo)/launch/ur5_state_controller.launch"/>
+<!--  <include file="$(find ur5_gazebo)/launch/ur5_effort_controller.launch"/>-->
+<!--  <include file="$(find ur5_gazebo)/launch/ur5_effort_position_controller.launch"/>-->
+<!--  gripper controller  -->
+<!--  <include file="$(find ur5_gazebo)/launch/gripper_controller.launch"/>-->
+  <!--  fake base controller  -->
+  <node name="omni_rob_fake_base_controller" pkg="omni_rob" type="base_controller.py" output="screen"  />
+  <!-- fake odometry pub -->
+  <node name="omni_rob_fake_odom" pkg="omni_rob" type="fake_odom.py" output="screen"  />
+</launch>

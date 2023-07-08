@@ -1,0 +1,36 @@
+<launch>
+    <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+    <!-- arg name="paused" default="true"/ -->
+    <!--   <arg name="use_sim_time" default="true"/> -->
+    <arg name="gui" default="true"/>
+    <!--  <arg name="gui" default="false"/>-->
+
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+    <!-- <remap from="robot/laser/scan" to="/scan"/> -->
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="verbose" value="true" />
+    </include>
+
+    <!-- Load the URDF into the ROS Parameter Server -->
+    <arg name="model" default="$(find omni_rob)/urdf/mabi/mabi_mobile.xacro" />
+
+    <param name="robot_description" command="$(find xacro)/xacro  --inorder $(arg model)" />
+
+    <!-- Run a python script to send a service call the gazebo_ros to spawn a URDF robot -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot -param robot_description -z 0.05"/>
+
+      <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+      <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+    <!--  <node name="rt" pkg="navigation_pkg" type="realTime-Tracker" />-->
+
+    <param name="pub_frame_name" value="/lidar_link" />
+    <node name="d435_trans_pub_node" pkg="omni_rob" type="camera_trans_pub.py" output="screen"  />
+    <node name="ts_to_ps_node" pkg="open_door_mpc" type="transformstamped_to_posestamped.py" output="screen"  />
+
+</launch>

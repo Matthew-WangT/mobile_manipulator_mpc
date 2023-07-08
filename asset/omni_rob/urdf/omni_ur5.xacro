@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro"
+	   name="omni_ur5" >
+
+	<xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+<!--	<xacro:arg name="transmission_hw_interface" default="hardware_interface/EffortJointInterface"/>-->
+
+	<!-- common stuff -->
+	<xacro:include filename="$(find ur5_description)/urdf/common.gazebo.xacro" />
+
+	<!-- ur5 -->
+	<xacro:include filename="$(find ur5_description)/urdf/ur5.urdf.xacro" />
+
+	<!-- arm -->
+	<xacro:ur5_robot prefix="" joint_limited="false"
+					 transmission_hw_interface="$(arg transmission_hw_interface)"
+	/>
+
+	<!-- omni_base -->
+<!--  choose	-->
+<!--  1	-->
+<!--	<xacro:include filename="$(find omni_rob)/urdf/omni_base.xacro" />-->
+
+<!--	<joint name="omni_base_to_ur5_base" type="fixed">-->
+<!--		<parent link="omni_base_link" />-->
+<!--		<child link = "base_link" />-->
+<!--		<origin xyz="0.0 0.0 0.4" rpy="0.0 0.0 0.0" />-->
+<!--	</joint>-->
+
+<!--  2  -->
+	<xacro:include filename="$(find omni_rob)/urdf/agv_base.xacro" />
+<!--	<xacro:include filename="$(find omni_rob)/urdf/agv_base_show.xacro" />-->
+	<joint name="omni_base_to_ur5_base" type="fixed">
+		<parent link="dummy" />
+		<child link = "base_link" />
+		<origin xyz="0.0 0.0 0.5" rpy="0.0 0.0 0.0" />
+<!--		<origin xyz="0.0 0.0 0.35" rpy="0.0 0.0 0.0" />-->
+	</joint>
+
+<!--  3  -->
+<!--	<xacro:include filename="$(find omni_rob)/urdf/mabi/mabi_mobile.xacro" />-->
+<!--	<joint name="omni_base_to_ur5_base" type="fixed">-->
+<!--		<parent link="dummy" />-->
+<!--		<child link = "base_link" />-->
+<!--		<origin xyz="0.0 0.0 0.4" rpy="0.0 0.0 0.0" />-->
+<!--	</joint>-->
+
+	<!--  gripper	-->
+	<xacro:property name="rethink" value="1" />
+	<!--  rethink	-->
+	<xacro:if value="${rethink==1}">
+		<xacro:include filename="$(find rethink_ee_description)/urdf/electric_gripper/example_end_effector.urdf.xacro" />
+		<joint name="ee_to_gripper" type="fixed">
+			<parent link="ee_link" />
+			<child link = "left_gripper_base" />
+			<origin xyz="0.025 0.0 0.0" rpy="0 1.57 0.0" />
+		</joint>
+		<!--  add link	-->
+<!--		<xacro:property name="b_r" value="0.01" />-->
+<!--		<link name="tip_item">-->
+<!--			<visual>-->
+<!--				<geometry>-->
+<!--					<box size="${3*b_r} ${1*b_r} ${1*b_r}"/>-->
+<!--				</geometry>-->
+<!--				<origin rpy="0 0 0" xyz="0 0 0"/>-->
+<!--				<material name="white">　　　-->
+<!--					<color rgba="1 1 1 1"/>-->
+<!--				</material>-->
+<!--			</visual>-->
+<!--			<collision>-->
+<!--				<geometry>-->
+<!--						<box size="${3*b_r} ${1*b_r} ${1*b_r}"/>-->
+<!--				</geometry>-->
+<!--			</collision>-->
+<!--		</link>-->
+<!--		<joint name="tip_to_tip_item" type="fixed">-->
+<!--			<parent link="l_gripper_l_finger_tip" />-->
+<!--			<child link = "tip_item" />-->
+<!--			<origin xyz="0.0 -0.01 0.0" rpy="0 0 0.0" />-->
+<!--		</joint>-->
+	</xacro:if>
+
+	<!--  cylinder body	-->
+	<xacro:if value="${rethink==0}">
+		<xacro:property name="tip_length" value="0.17" />
+		<xacro:property name="tip_radius" value="0.006" />
+		<link name="cylinder_tip">
+			<visual>
+				<geometry>
+					<cylinder length="${tip_length}" radius="${tip_radius}"/>
+				</geometry>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<material name="red">　　　
+					<color rgba="0 1 0 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<cylinder length="${tip_length}" radius="${tip_radius}"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="ee_to_tip_joint" type="fixed">
+			<parent link="ee_link" />
+			<child link = "cylinder_tip" />
+			<origin xyz="${tip_length/2} 0.0 0.0" rpy="0 1.5708 0.0" />
+		</joint>
+		<link name="sphere_tip">
+			<visual>
+				<geometry>
+					<sphere radius="${tip_radius}"/>
+				</geometry>
+				<origin rpy="0 0 0" xyz="0 0 0"/>
+				<material name="red">　　　
+					<color rgba="0 1 0 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<sphere radius="${tip_radius}"/>
+				</geometry>
+			</collision>
+		</link>
+		<joint name="tip_to_sphere_joint" type="fixed">
+			<parent link="cylinder_tip" />
+			<child link = "sphere_tip" />
+			<origin xyz="0 0 ${(tip_length)/2}" rpy="0 0 0.0" />
+		</joint>
+	</xacro:if>
+<!--	<xacro:include filename="$(find ur5_description)/urdf/torque_sensor.xacro" />-->
+<!--	<xacro:torqueSensor link_name="cylinder_tip" joint_name="ee_to_tip_joint"/>-->
+<!--	<xacro:torqueSensor link_name="cylinder_tip" joint_name="ee_fixed_joint"/>-->
+
+	<!--  robotiq	-->
+<!--	<xacro:include filename="$(find robotiq_2f_140_gripper_description)/urdf/robotiq_arg2f_140_model.xacro" />-->
+<!--	<joint name="ee_to_gripper" type="fixed">-->
+<!--		<parent link="ee_link" />-->
+<!--		<child link = "robotiq_arg2f_base_link" />-->
+<!--		<origin xyz="0.025 0.0 0.0" rpy="0 1.57 0.0" />-->
+<!--	</joint>-->
+<!--  d435	-->
+<!--	<xacro:include filename="$(find realsense_ros_gazebo)/xacro/tracker.xacro"/>-->
+	<xacro:include filename="$(find realsense_ros_gazebo)/xacro/depthcam.xacro"/>
+	<xacro:realsense_d435 sensor_name="d435" parent_link="ee_link" rate="2">
+		<origin rpy="0 0 0 " xyz="0 0 0.05"/>
+	</xacro:realsense_d435>
+
+	<!-- VHDL-32E -->
+<!--	<xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>-->
+<!--	<HDL-32E parent="agv_base_link" name="velodyne_hdl32e" topic="velodyne_points" hz="10" samples="1024" gpu="false">-->
+<!--		<origin xyz="0 0 1.5" rpy="0 0 0" />-->
+<!--	</HDL-32E>-->
+<!--	&lt;!&ndash; VLP-16 &ndash;&gt;-->
+<!--	<xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>-->
+<!--	<VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="1024" gpu="false" lasers="16" max_range="100">-->
+<!--		<origin xyz="0 0 0.5" rpy="0 0 0" />-->
+<!--	</VLP-16>-->
+
+</robot>

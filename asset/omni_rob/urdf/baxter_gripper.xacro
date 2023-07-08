@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<robot name="left_electric_gripper" xmlns:xacro="http://wiki.ros.org/xacro">
+    <link name="left_gripper_base">
+        <collision>
+            <origin rpy="-1.57079632679 3.14159265359 0" xyz="0.0 0.0 0"/>
+            <geometry>
+                <cylinder length="0.1" radius="0.029"/>
+            </geometry>
+            <material name="darkred">
+                <color rgba=".5 .1 .1 1"/>
+            </material>
+        </collision>
+        <visual>
+            <origin rpy="-1.57079632679 3.14159265359 0" xyz="0.0 0.0 0"/>
+            <geometry>
+                <cylinder length="0.1" radius="0.029"/>
+            </geometry>
+            <material name="darkred">
+                <color rgba=".5 .1 .1 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin rpy="-1.57079632679 3.14159265359 0" xyz="0.0 0.0 0.0"/>
+            <mass value="0.3"/>
+            <inertia ixx="2e-08" ixy="0" ixz="0" iyy="3e-08" iyz="0" izz="2e-08"/>
+        </inertial>
+    </link>
+    <link name="left_gripper">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.0001"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0.0"/>
+        </inertial>
+    </link>
+<!--    <joint name="left_gripper_base" type="fixed">-->
+<!--        <origin rpy="0 0 0" xyz="0 0 0.025"/>-->
+<!--        <parent link="left_hand"/>-->
+<!--        <child link="left_gripper_base"/>-->
+<!--    </joint>-->
+    <joint name="left_endpoint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0.1327"/>
+        <parent link="left_gripper_base"/>
+        <child link="left_gripper"/>
+    </joint>
+
+</robot>
