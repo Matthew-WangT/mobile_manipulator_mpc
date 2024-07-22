@@ -44,3 +44,6 @@ roslaunch open_door_mpc rob_demo.launch
 
 [4] [
 Mohamed W. Mehrez的casadi视频教程](https://www.youtube.com/watch?v=RrnkPrcpyEA&t=7s)
+
+[5]汪正涛.移动机械臂运动规划与自主开门技术研究[D].南京理工大学,2022.DOI:10.27241/d.cnki.gnjgu.2022.001211.
+
